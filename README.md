@@ -1,16 +1,8 @@
-# Open WebUI 👋
+# CASTAPRIVA
 
-![GitHub stars](https://img.shields.io/github/stars/open-webui/open-webui?style=social)
-![GitHub forks](https://img.shields.io/github/forks/open-webui/open-webui?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/open-webui/open-webui?style=social)
-![GitHub repo size](https://img.shields.io/github/repo-size/open-webui/open-webui)
-![GitHub language count](https://img.shields.io/github/languages/count/open-webui/open-webui)
-![GitHub top language](https://img.shields.io/github/languages/top/open-webui/open-webui)
-![GitHub last commit](https://img.shields.io/github/last-commit/open-webui/open-webui?color=red)
-[![Discord](https://img.shields.io/badge/Discord-Open_WebUI-blue?logo=discord&logoColor=white)](https://discord.gg/5rJgQTnV4s)
-[![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/open-webui)
+> **CASTAPRIVA is a rebranded fork of [Open WebUI](https://github.com/open-webui/open-webui)** — a self-hosted AI platform that's extensible, feature-rich, and offline-capable, with support for Ollama and OpenAI-compatible APIs.
 
-Open WebUI is **a home for AI**, a self-hosted AI platform that's **[extensible](https://docs.openwebui.com/features/extensibility/plugin/)**, **[feature-rich](https://docs.openwebui.com/features/)**, user-friendly, and built to run **[entirely offline](https://openwebui.com/sovereign-ai)**. With support for **Ollama** and **OpenAI-compatible APIs**, it gives you a powerful, provider-agnostic interface for both local and cloud-based models.
+Built by **CASTASOFT** on top of Open WebUI. Upstream attribution retained per `LICENSE` and `LICENSE_HISTORY`.
 
 Passionate about open-source AI? [Join our team →](https://careers.openwebui.com/)
 
@@ -101,163 +93,120 @@ Open WebUI is the core, surrounded by companion apps and infrastructure that ext
 
 Want to learn more? Check out our [Open WebUI documentation](https://docs.openwebui.com) for more details!
 
+![CASTAPRIVA Demo](./demo.png)
+
 ---
 
-We are incredibly grateful for the generous support of our sponsors. Their contributions help us to maintain and improve our project, ensuring we can continue to deliver quality work to our community. Thank you!
+## Branches — clean sync + rebrand overlay
 
-## How to Install 🚀
+This repo is set up to stay **conflict-free** when syncing with upstream:
 
-### Installation via Python pip 🐍
+| Branch | Purpose | Contains |
+|---|---|---|
+| `main` | **Clean sync** — exact mirror of `open-webui/open-webui@main` | No rebrand changes. Fast-forward only from upstream. |
+| `rebrand/castapriva` | **Branding overlay** — visible name/logo → CASTAPRIVA | `main` + minimal patch: `WEBUI_NAME`, `package.json`, `pyproject.toml`, `LICENSE`, `README`, `static/BRANDING.md` |
 
-Open WebUI can be installed using pip, the Python package installer. Before proceeding, ensure you're using **Python 3.11** to avoid compatibility issues.
+**Rule: never commit rebrand changes to `main`.** Always rebase/merge `main` into `rebrand/castapriva`.
 
-1. **Install Open WebUI**:
-   Open your terminal and run the following command to install Open WebUI:
-
-   ```bash
-   pip install open-webui
-   ```
-
-2. **Running Open WebUI**:
-   After installation, you can start Open WebUI by executing:
-
-   ```bash
-   open-webui serve
-   ```
-
-This will start the Open WebUI server, which you can access at [http://localhost:8080](http://localhost:8080)
-
-### Quick Start with Docker 🐳
-
-> [!NOTE]  
-> Please note that for certain Docker environments, additional configurations might be needed. If you encounter any connection issues, our detailed guide on [Open WebUI Documentation](https://docs.openwebui.com/) is ready to assist you.
-
-> [!WARNING]
-> When using Docker to install Open WebUI, make sure to include the `-v open-webui:/app/backend/data` in your Docker command. This step is crucial as it ensures your database is properly mounted and prevents any loss of data.
-
-> [!TIP]  
-> If you wish to utilize Open WebUI with Ollama included or CUDA acceleration, we recommend utilizing our official images tagged with either `:cuda` or `:ollama`. To enable CUDA, you must install the [Nvidia CUDA container toolkit](https://docs.nvidia.com/dgx/nvidia-container-runtime-upgrade/) on your Linux/WSL system.
-
-### Installation with Default Configuration
-
-- **If Ollama is on your computer**, use this command:
-
-  ```bash
-  docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
-  ```
-
-- **If Ollama is on a Different Server**, use this command:
-
-  To connect to Ollama on another server, change the `OLLAMA_BASE_URL` to the server's URL:
-
-  ```bash
-  docker run -d -p 3000:8080 -e OLLAMA_BASE_URL=https://example.com -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
-  ```
-
-- **To run Open WebUI with Nvidia GPU support**, use this command:
-
-  ```bash
-  docker run -d -p 3000:8080 --gpus all --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:cuda
-  ```
-
-### Installation for OpenAI API Usage Only
-
-- **If you're only using OpenAI API**, use this command:
-
-  ```bash
-  docker run -d -p 3000:8080 -e OPENAI_API_KEY=your_secret_key -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
-  ```
-
-### Installing Open WebUI with Bundled Ollama Support
-
-This installation method uses a single container image that bundles Open WebUI with Ollama, allowing for a streamlined setup via a single command. Choose the appropriate command based on your hardware setup:
-
-- **With GPU Support**:
-  Utilize GPU resources by running the following command:
-
-  ```bash
-  docker run -d -p 3000:8080 --gpus=all -v ollama:/root/.ollama -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:ollama
-  ```
-
-- **For CPU Only**:
-  If you're not using a GPU, use this command instead:
-
-  ```bash
-  docker run -d -p 3000:8080 -v ollama:/root/.ollama -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:ollama
-  ```
-
-Both commands facilitate a built-in, hassle-free installation of both Open WebUI and Ollama, ensuring that you can get everything up and running swiftly.
-
-After installation, you can access Open WebUI at [http://localhost:3000](http://localhost:3000). Enjoy! 😄
-
-### Other Installation Methods
-
-We offer various installation alternatives, including non-Docker native installation methods, Docker Compose, Kustomize, and Helm. Visit our [Open WebUI Documentation](https://docs.openwebui.com/getting-started/) or join our [Discord community](https://discord.gg/5rJgQTnV4s) for comprehensive guidance.
-
-### Troubleshooting
-
-Encountering connection issues? Our [Open WebUI Documentation](https://docs.openwebui.com/troubleshooting/) has got you covered. For further assistance and to join our vibrant community, visit the [Open WebUI Discord](https://discord.gg/5rJgQTnV4s).
-
-#### Open WebUI: Server Connection Error
-
-If you're experiencing connection issues, it’s often due to the WebUI docker container not being able to reach the Ollama server at 127.0.0.1:11434 (host.docker.internal:11434) inside the container . Use the `--network=host` flag in your docker command to resolve this. Note that the port changes from 3000 to 8080, resulting in the link: `http://localhost:8080`.
-
-**Example Docker Command**:
+### Sync with upstream (maintainer)
 
 ```bash
-docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name open-webui --restart always ghcr.io/open-webui/open-webui:main
+# one-time: add upstream if missing
+git remote add upstream https://github.com/open-webui/open-webui.git
+git fetch upstream --prune
+
+# 1) update clean branch
+git checkout main
+git pull --ff-only upstream main
+git push origin main
+
+# 2) replay rebrand on top
+git checkout rebrand/castapriva
+git merge main        # or: git rebase main
+# resolve conflicts if any (touch only 5-6 overlay files)
+git push origin rebrand/castapriva
 ```
 
-### Keeping Your Docker Installation Up-to-Date
+Helper: `scripts/sync-upstream.sh` does the above.
 
-Check our Updating Guide available in our [Open WebUI Documentation](https://docs.openwebui.com/getting-started/updating).
+Upstream tags (`v0.11.x` etc.) are fetched but not pushed unless you want them: `git push origin --tags`.
 
-### Using the Dev Branch 🌙
+---
 
-> [!WARNING]
-> The `:dev` branch contains the latest unstable features and changes. Use it at your own risk as it may have bugs or incomplete features.
+## What was rebranded (visible only)
 
-If you want to try out the latest bleeding-edge features and are okay with occasional instability, you can use the `:dev` tag like this:
+Minimal overlay to keep merges clean:
+
+- `backend/open_webui/env.py` — `WEBUI_NAME` defaults to `CASTAPRIVA`; removed forced ` (Open WebUI)` suffix. Set `WEBUI_NAME` env to white-label further.
+- `package.json` — `name: castapriva`
+- `pyproject.toml` — `name = "castapriva"`, script alias `castapriva`
+- `LICENSE` — added CASTAPRIVA grant that explicitly permits replacing Open WebUI branding while preserving attribution (see License below).
+- `static/BRANDING.md` — documents CASTAPRIVA assets vs upstream.
+- `.env.example` — examples `WEBUI_NAME=CASTAPRIVA`.
+
+Runtime UI title, PWA `name`/`short_name`, OpenSearch, and page `<title>` all derive from `WEBUI_NAME`, so changing that env is sufficient for most visible surfaces. No mass find-replace across hundreds of source files — that's intentional to avoid churn.
+
+To change visuals: replace `static/favicon.png` and `static/splash.png` (and rebuild).
+
+---
+
+## Quick start
+
+Same as upstream, with CASTAPRIVA name:
+
+### Docker (recommended)
 
 ```bash
-docker run -d -p 3000:8080 -v open-webui:/app/backend/data --name open-webui --add-host=host.docker.internal:host-gateway --restart always ghcr.io/open-webui/open-webui:dev
+# same image as upstream for now — WEBUI_NAME controls the displayed name
+docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway \
+  -v open-webui:/app/backend/data --name castapriva \
+  -e WEBUI_NAME=CASTAPRIVA \
+  --restart always ghcr.io/open-webui/open-webui:main
 ```
 
-### Offline Mode
+After start, open http://localhost:3000 — the header/title shows **CASTAPRIVA**.
 
-If you are running Open WebUI in an offline environment, you can set the `HF_HUB_OFFLINE` environment variable to `1` to prevent attempts to download models from the internet.
+### Pip
 
 ```bash
-export HF_HUB_OFFLINE=1
+pip install -e .   # or pip install castapriva after publishing
+WEBUI_NAME=CASTAPRIVA castapriva serve
+# or: open-webui serve  (alias preserved)
 ```
 
-## What's Next? 🌟
+See upstream docs for full options: https://docs.openwebui.com/
 
-Discover upcoming features on our roadmap in the [Open WebUI Documentation](https://docs.openwebui.com/roadmap/).
+---
 
 ## License 📜
 
-This project contains code under multiple licenses. The current codebase includes components licensed under the Open WebUI License with an additional requirement to preserve the "Open WebUI" branding, as well as prior contributions under their respective original licenses. For a detailed record of license changes and the applicable terms for each section of the code, please refer to [LICENSE_HISTORY](./LICENSE_HISTORY). For complete and updated licensing details, please see the [LICENSE](./LICENSE) and [LICENSE_HISTORY](./LICENSE_HISTORY) files.
+- Upstream portions: original licenses per `LICENSE_HISTORY` (BSD-3-Clause before `60d84a3`, MIT before `a76068d`, Open WebUI License after).
+- This fork's overlay: `LICENSE` adds an explicit permission for CASTAPRIVA to replace Open WebUI branding, with attribution retained. See `LICENSE` for full text.
+- Branding assets: `static/BRANDING.md`.
+- Upstream docs: https://docs.openwebui.com/license
 
-## Support 💬
-
-If you have any questions, suggestions, or need assistance, please open an issue or join our
-[Open WebUI Discord community](https://discord.gg/5rJgQTnV4s) to connect with us! 🤝
-
-## Security 🛡️
-
-If you believe you've found a security vulnerability, or something that shouldn't be disclosed publicly, please [reach out confidentially through our responsible disclosure program on GitHub](https://github.com/open-webui/open-webui/security). We accept reports only through GitHub, not through any other platform. Thank you for helping us keep Open WebUI secure!
-
-## Star History
-
-<a href="https://star-history.com/#open-webui/open-webui&Date">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=open-webui/open-webui&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=open-webui/open-webui&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=open-webui/open-webui&type=Date" />
-  </picture>
-</a>
+**Attribution:** Built on [Open WebUI](https://github.com/open-webui/open-webui) by Open WebUI Inc. (Timothy Jaeryang Baek). CASTAPRIVA is not affiliated with Open WebUI Inc.
 
 ---
 
-Created by [Timothy Jaeryang Baek](https://github.com/tjbck) - Let's make Open WebUI even more amazing together! 💪
+## Support
+
+- Issues for CASTAPRIVA-specific rebrand: https://github.com/castaso/CASTAPRIVA/issues
+- Upstream features/bugs: prefer https://github.com/open-webui/open-webui
+
+---
+
+## Development
+
+```bash
+# clean branch for upstream PRs/contributions
+git checkout main
+
+# rebrand branch for CASTAPRIVA deploys
+git checkout rebrand/castapriva
+npm install
+npm run dev -- --host
+```
+
+Environment: `WEBUI_NAME=CASTAPRIVA` (default on rebrand branch). Override in `.env`.
+
