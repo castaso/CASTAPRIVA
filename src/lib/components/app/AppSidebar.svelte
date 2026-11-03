@@ -65,7 +65,7 @@
 			https://docs.openwebui.com/license. -->
 			<img
 				src="{WEBUI_BASE_URL}/static/favicon.png"
-				class="size-10 {selected === '' ? 'rounded-2xl' : 'rounded-full'}"
+				class="size-10 object-contain"
 				alt="logo"
 				draggable="false"
 			/>

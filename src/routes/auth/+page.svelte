@@ -254,13 +254,20 @@
 									<!-- LICENSE covers this Open WebUI sign-in logo.
 									Do not alter, remove, obscure, or replace it except as LICENSE permits:
 									https://docs.openwebui.com/license. -->
-									<img
-										id="logo"
-										crossorigin="anonymous"
-										src="{WEBUI_BASE_URL}/static/favicon.png"
-										class="size-24 rounded-full"
-										alt="{$WEBUI_NAME} logo"
-									/>
+								<img
+									id="logo"
+									crossorigin="anonymous"
+									src="{WEBUI_BASE_URL}/static/splash.png"
+									class="h-16 w-auto dark:hidden"
+									alt="{$WEBUI_NAME} logo"
+								/>
+								<img
+									id="logo-dark"
+									crossorigin="anonymous"
+									src="{WEBUI_BASE_URL}/static/splash-dark.png"
+									class="h-16 w-auto hidden dark:block"
+									alt="{$WEBUI_NAME} logo"
+								/>
 								</div>
 							{/if}
 							<form
@@ -629,7 +636,7 @@
 							id="logo"
 							crossorigin="anonymous"
 							src="{WEBUI_BASE_URL}/static/favicon.png"
-							class=" w-6 rounded-full"
+							class="h-6 w-auto"
 							alt=""
 						/>
 					</div>
